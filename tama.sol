@@ -61,18 +61,23 @@ contract Tama {
         tamaMap[tamaName].level = 1;
         tamaMap[tamaName].totalExp = 0;
         tamaMap[tamaName].lastFeed = 0;
-        tamaMap[tamaName].historyLog.push(string(abi.encodePacked(Strings.toString(block.timestamp)," | Tama created with name : ", tamaName)));
+        tamaMap[tamaName].historyLog.push(
+            string(
+                abi.encodePacked(
+                    Strings.toString(block.timestamp),
+                    " | Tama created with name : ",
+                    tamaName
+                )
+            )
+        );
         tamaList.push(tamaName);
     }
 
     function getTamaHistory(string memory tamaName)
         public
         view
-        returns (
-           string[] memory historyLog
-        )
+        returns (string[] memory historyLog)
     {
-        
         historyLog = tamaMap[tamaName].historyLog;
     }
 
@@ -83,7 +88,7 @@ contract Tama {
             address owner,
             string memory name,
             uint256 level,
-            uint totalExp,
+            uint256 totalExp,
             bool isListed,
             uint256 listedPrice
         )
@@ -101,11 +106,19 @@ contract Tama {
             tamaMap[tamaName].lastTrained < (block.timestamp - 5 minutes),
             "Tama is still tired, wait for 5 minutes"
         );
-        uint trainEXP = 50;
+        uint256 trainEXP = 50;
         tamaMap[tamaName].totalExp += trainEXP;
         tamaMap[tamaName].lastTrained = block.timestamp;
         tamaMap[tamaName].level = calculateExp(tamaMap[tamaName].totalExp);
-        tamaMap[tamaName].historyLog.push(string(abi.encodePacked(Strings.toString(block.timestamp), " | Tama is training and get EXP : ",Strings.toString(trainEXP))));
+        tamaMap[tamaName].historyLog.push(
+            string(
+                abi.encodePacked(
+                    Strings.toString(block.timestamp),
+                    " | Tama is training and get EXP : ",
+                    Strings.toString(trainEXP)
+                )
+            )
+        );
     }
 
     function feedTama(string memory tamaName) public onlyOwner(tamaName) {
@@ -113,21 +126,36 @@ contract Tama {
             tamaMap[tamaName].lastFeed < (block.timestamp - 1 minutes),
             "Tama is still full, wait for 1 minutes"
         );
-        uint feedEXP = 10;
+        uint256 feedEXP = 10;
         tamaMap[tamaName].totalExp += feedEXP;
         tamaMap[tamaName].lastFeed = block.timestamp;
         tamaMap[tamaName].level = calculateExp(tamaMap[tamaName].totalExp);
-        tamaMap[tamaName].historyLog.push(string(abi.encodePacked(Strings.toString(block.timestamp), " | Tama is eating and get EXP : ",Strings.toString(feedEXP))));
+        tamaMap[tamaName].historyLog.push(
+            string(
+                abi.encodePacked(
+                    Strings.toString(block.timestamp),
+                    " | Tama is eating and get EXP : ",
+                    Strings.toString(feedEXP)
+                )
+            )
+        );
     }
 
     function buyExp(string memory tamaName) public payable {
         require(msg.value == 1 ether, "Need to send 1 ETH");
         (bool sent, ) = initiatorAddress.call{value: msg.value}("");
         require(sent, "Failed to send Ether ");
-        uint potEXP = 100;
+        uint256 potEXP = 100;
         tamaMap[tamaName].totalExp += potEXP;
         tamaMap[tamaName].level = calculateExp(tamaMap[tamaName].totalExp);
-        tamaMap[tamaName].historyLog.push(string(abi.encodePacked(Strings.toString(block.timestamp), " | Tama is getting EXP Potion : ",Strings.toString(potEXP)))
+        tamaMap[tamaName].historyLog.push(
+            string(
+                abi.encodePacked(
+                    Strings.toString(block.timestamp),
+                    " | Tama is getting EXP Potion : ",
+                    Strings.toString(potEXP)
+                )
+            )
         );
     }
 
@@ -151,7 +179,13 @@ contract Tama {
         tamaMap[tamaName].marketIndex = marketCounter;
         marketCounter++;
         tamaMap[tamaName].historyLog.push(
-            string(abi.encodePacked(Strings.toString(block.timestamp), " | Tama is getting listed with price : ",Strings.toString(priceETH)))
+            string(
+                abi.encodePacked(
+                    Strings.toString(block.timestamp),
+                    " | Tama is getting listed with price : ",
+                    Strings.toString(priceETH)
+                )
+            )
         );
     }
 
@@ -160,7 +194,12 @@ contract Tama {
         uint256 marketIndex = tamaMap[tamaName].marketIndex;
         delete marketMap[marketIndex];
         tamaMap[tamaName].historyLog.push(
-            string(abi.encodePacked(Strings.toString(block.timestamp), " | Tama listing has been cancelled"))
+            string(
+                abi.encodePacked(
+                    Strings.toString(block.timestamp),
+                    " | Tama listing has been cancelled"
+                )
+            )
         );
     }
 
@@ -187,7 +226,13 @@ contract Tama {
         delete marketMap[marketIndex];
 
         tamaMap[tamaName].historyLog.push(
-            string(abi.encodePacked(Strings.toString(block.timestamp), " | Tama is bought, now the owner is : ", tamaMap[tamaName].owner))
+            string(
+                abi.encodePacked(
+                    Strings.toString(block.timestamp),
+                    " | Tama is bought, now the owner is : ",
+                    tamaMap[tamaName].owner
+                )
+            )
         );
     }
 
@@ -198,7 +243,13 @@ contract Tama {
                 tamaMap[tamaList[i]].totalExp
             );
             tamaMap[tamaList[i]].historyLog.push(
-               string(abi.encodePacked(Strings.toString(block.timestamp), " | Tama is getting bonus EXP : ",Strings.toString(expAmount)))
+                string(
+                    abi.encodePacked(
+                        Strings.toString(block.timestamp),
+                        " | Tama is getting bonus EXP : ",
+                        Strings.toString(expAmount)
+                    )
+                )
             );
         }
     }
