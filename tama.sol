@@ -15,6 +15,7 @@ contract Tama {
         bool isListed;
         uint256 listedPrice;
         uint256 marketIndex;
+        bool isAlive;
     }
 
     struct MarketData {
@@ -38,6 +39,7 @@ contract Tama {
         );
         _;
     }
+    
     modifier onlyOwner(string memory tamaName) {
         require(
             msg.sender == tamaMap[tamaName].owner,
@@ -61,6 +63,7 @@ contract Tama {
         tamaMap[tamaName].level = 1;
         tamaMap[tamaName].totalExp = 0;
         tamaMap[tamaName].lastFeed = 0;
+        tamaMap[tamaName].isAlive = true;
         tamaMap[tamaName].historyLog.push(
             string(
                 abi.encodePacked(
@@ -159,14 +162,8 @@ contract Tama {
         );
     }
 
-    function deleteTama(string memory tamaName) public onlyOwner(tamaName) {
-        delete tamaMap[tamaName];
-        for (uint256 i = 0; i < tamaList.length; i++) {
-            if (keccak256(bytes(tamaList[i])) == keccak256(bytes(tamaName))) {
-                tamaList[i] = tamaList[i + 1];
-            }
-        }
-        tamaList.pop();
+    function killTama(string memory tamaName) public onlyOwner(tamaName) {
+        tamaMap[tamaName].isAlive = false;
     }
 
     function listInETH(string memory tamaName, uint256 priceETH)
@@ -220,6 +217,7 @@ contract Tama {
         );
         (bool sent, ) = tamaMap[tamaName].owner.call{value: msg.value}("");
         require(sent, "Failed to send Ether ");
+
         tamaMap[tamaName].owner = msg.sender;
         tamaMap[tamaName].isListed = false;
         uint256 marketIndex = tamaMap[tamaName].marketIndex;
