@@ -22,7 +22,7 @@ Smart Contract for a simple tamagochi app.
 - As an owner, I can feed my Tama
 - As an owner, I can train my Tama
 - As an owner, I can buy EXP for my Tama
-- As an owner, I can delete my Tama
+- As an owner, I can kill my Tama
 - As an owner, I can list my Tama to Market (in ETH)
 - As an owner, I can cancel listing my Tama from Market
 - As an owner, I can check my Tama Diary (history log)
@@ -45,3 +45,14 @@ EXP Table
 | 4 | 300   |
 | 5 | 500   |
 | ... | ...   |
+
+#### Values of Parameter
+| Case | Input Example    |
+| :---:   | :---: |
+| createTama | Tamago   |
+| feedTama | Tamago   |
+| trainTama | Tamago   |
+| listInETH | Tamago,3   |
+| buyEXP | Tamago   |
+| giveBonus | 100 (EXP)   |
+| getTama | Tamago   |
