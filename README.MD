@@ -2,6 +2,19 @@
 # Tama
 Smart Contract for a simple tamagochi app.
 
+Tama Attributes
+
+<img width="252" alt="Screen Shot 2022-12-26 at 14 49 48" src="https://user-images.githubusercontent.com/42406957/209520642-b87aae1d-a0c5-4dc2-8ec0-3f3e28f5b09a.png">
+
+Market (Tama <> Price in ETH)
+
+<img width="256" alt="Screen Shot 2022-12-26 at 14 49 29" src="https://user-images.githubusercontent.com/42406957/209520653-1bda200c-1a89-4d47-9b0b-e928c387bba4.png">
+
+Tama Diary(History Log)
+
+<img width="252" alt="Screen Shot 2022-12-26 at 14 50 54" src="https://user-images.githubusercontent.com/42406957/209520786-fd27c610-b3a8-4de5-a80f-375a7c6dbc38.png">
+
+
 ## Features
 #### Tama
 - As a Tama, I can get EXP Point from getting feed
